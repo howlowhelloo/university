@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Добавление
+студента{% endblock %} {% block content %}
+<h2>Добавить одногруппника</h2>
+<form method="post" class="card p-4 shadow-sm bg-white">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="btn btn-light" style="background-color: #f8c8dc">
+    Добавить
+  </button>
+</form>
+{% endblock %}

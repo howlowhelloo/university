@@ -1,0 +1,145 @@
+{% extends 'base_app2.html' %} {% block title %}Список студентов{% endblock %}
+{% block content %}
+<div class="container mb-4">
+  <h1 class="text mb-3">Моя образовательная программа</h1>
+
+  <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+    <div class="d-flex align-items-center gap-2">
+      <span class="fw-bold">Выбрать раздел:</span>
+      <select
+        id="sectionSelect"
+        class="form-select w-auto"
+        onchange="filterSection(this.value)"
+      >
+        <option value="all" selected>Показать все</option>
+        <option value="section1">1. Название ОП</option>
+        <option value="section2">2. Что я буду изучать</option>
+        <option value="section3">3. Чему научусь</option>
+        <option value="section4">4. Преимущества программы</option>
+        <option value="section5">5. Перспективы после обучения</option>
+      </select>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+      <span class="fw-bold">Сортировать:</span>
+      <button
+        class="btn btn-outline-primary btn-sm"
+        onclick="sortSections(true)"
+      >
+        1 → 5
+      </button>
+      <button
+        class="btn btn-outline-primary btn-sm"
+        onclick="sortSections(false)"
+      >
+        5 → 1
+      </button>
+    </div>
+  </div>
+
+  <!-- Контейнер с разделами -->
+  <div id="sectionsContainer">
+    <!-- Раздел 1 -->
+    <div id="section1" class="card shadow-sm p-4 mb-4 program-section">
+      <h4 class="fw-bold mb-2">1. Название ОП</h4>
+      <p>
+        <a
+          href="https://www.hse.ru/ba/law"
+          class="text-decoration-none text-dark fw-semibold"
+          target="_blank"
+        >
+          Юриспруденция
+        </a>
+      </p>
+    </div>
+
+    <!-- Раздел 2 -->
+    <div id="section2" class="card shadow-sm p-4 mb-4 program-section">
+      <h4 class="fw-bold mb-2">2. Что я буду изучать</h4>
+      <p>В рамках профессионального цикла все студенты будут изучать:</p>
+      <ul>
+        <li>Теория государства и права</li>
+        <li>История государства и права России</li>
+        <li>История государства и права зарубежных стран</li>
+        <li>Конституционное право</li>
+        <li>Логика и юридическая аргументация</li>
+        <li>Судебная власть и правоохранительные органы</li>
+        <li>Гражданское право (общая и особенная части)</li>
+        <li>Административное право</li>
+        <li>Уголовное право (общая и особенная части)</li>
+        <li>Институциональная экономика</li>
+        <li>Финансовое и налоговое право</li>
+        <li>Уголовно-процессуальное право</li>
+        <li>Гражданское процессуальное право</li>
+        <li>Международное публичное право</li>
+        <li>Международное частное право</li>
+        <li>Предпринимательское право</li>
+        <li>Финансовое право</li>
+        <li>Арбитражно-процессуальное право</li>
+        <li>Исполнительное производство</li>
+        <li>Трудовое право</li>
+      </ul>
+      <p>Также — 2–3 курса по выбору и треки с 3 курса.</p>
+    </div>
+
+    <!-- Раздел 3 -->
+    <div id="section3" class="card shadow-sm p-4 mb-4 program-section">
+      <h4 class="fw-bold mb-2">3. Чему научусь</h4>
+      <p>
+        Вы научитесь искусству юриспруденции, разбирать дела, решать юридические
+        задачи, переосмыслять значение слов и мыслить как разумный человек.
+      </p>
+      <p>
+        Поймёте, что такое закон, его потенциал и ограничения. Учитесь мыслить
+        широко и критически — стереотипы ограничивают мышление.
+      </p>
+    </div>
+
+    <!-- Раздел 4 -->
+    <div id="section4" class="card shadow-sm p-4 mb-4 program-section">
+      <h4 class="fw-bold mb-2">4. Преимущества программы</h4>
+      <ul>
+        <li>Высокий уровень подготовки</li>
+        <li>Свободное владение английским языком</li>
+        <li>Международные стажировки</li>
+        <li>Современные методики обучения юристов</li>
+        <li>Дополнительные предметы по выбору (майноры)</li>
+        <li>Сочетание теории, практики и проектной работы</li>
+        <li>Финансовая поддержка лучших студентов</li>
+      </ul>
+    </div>
+
+    <!-- Раздел 5 -->
+    <div id="section5" class="card shadow-sm p-4 mb-4 program-section">
+      <h4 class="fw-bold mb-2">5. Перспективы после обучения</h4>
+      <p>Выпускники могут работать:</p>
+      <ul>
+        <li>в юридических департаментах коммерческих организаций</li>
+        <li>в международных и российских юридических фирмах</li>
+        <li>в органах государственной власти и местного самоуправления</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function filterSection(value) {
+    const allSections = document.querySelectorAll(".program-section");
+    allSections.forEach((section) => {
+      section.style.display =
+        value === "all" || section.id === value ? "block" : "none";
+    });
+  }
+
+  function sortSections(ascending = true) {
+    const container = document.getElementById("sectionsContainer");
+    const sections = Array.from(container.querySelectorAll(".program-section"));
+    sections.sort((a, b) => {
+      const numA = parseInt(a.id.replace("section", ""));
+      const numB = parseInt(b.id.replace("section", ""));
+      return ascending ? numA - numB : numB - numA;
+    });
+    sections.forEach((sec) => container.appendChild(sec));
+  }
+</script>
+{% endblock %}

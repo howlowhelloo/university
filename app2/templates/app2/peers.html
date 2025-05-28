@@ -1,0 +1,35 @@
+{% extends 'base_app2.html' %} {% load static %} {% block title %}Мои
+сокурсники{% endblock %} {% block content %}
+<h2 class="mb-4">Мои сокурсники</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <form method="get">
+      <select name="sort" class="form-select w-auto" onchange="this.form.submit()">
+        <option value="">Сортировать...</option>
+        <option value="az" {% if request.GET.sort == "az" %}selected{% endif %}>А → Я</option>
+        <option value="za" {% if request.GET.sort == "za" %}selected{% endif %}>Я → А</option>
+      </select>
+    </form>
+  </div>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for peer in peers %}
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      <img
+        src="{{ peer.photo.url }}"
+        alt="Фото сокурсника"
+        class="img-fluid rounded border"
+      />
+
+      <div class="card-body">
+        <h5 class="card-title">{{ peer.full_name }}</h5>
+        <p class="card-text"><strong>Email:</strong> {{ peer.email }}</p>
+        <p class="card-text"><strong>Телефон:</strong> {{ peer.phone }}</p>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>Нет добавленных сокурсников.</p>
+  {% endfor %}
+</div>
+{% endblock %}

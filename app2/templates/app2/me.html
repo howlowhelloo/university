@@ -1,0 +1,72 @@
+{% extends 'base_app2.html' %} {% block title %}Список студентов{% endblock %}
+{% block content %}
+
+<div class="d-flex align-items-center gap-2 mb-4">
+  <span class="fw-bold fs-5">Я и моё обучение в Вышке:</span>
+  <select
+    id="sectionSelector"
+    class="form-select w-auto"
+    onchange="toggleSection(this.value)"
+  >
+    <option value="all" selected>Все</option>
+    <option value="me">Я</option>
+    <option value="resume">Резюме</option>
+  </select>
+</div>
+
+<!-- Блок: Я -->
+<div id="section-me" class="section-block">
+  <div class="card shadow-sm p-3 mb-4">
+    <h5 class="text-secondary text-center">Я</h5>
+    <div class="row g-0">
+      <div
+        class="col-md-4 d-flex align-items-center justify-content-center p-3"
+      >
+        <img
+          src="{{ student.photo }}"
+          alt="Фото студента"
+          class="img-fluid rounded border"
+          style="max-width: 100%"
+        />
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h4 class="card-title fw-bold mb-3">{{ student.full_name }}</h4>
+          <p class="card-text">
+            <strong>Электронная почта:</strong> {{ student.email }}
+          </p>
+          <p class="card-text"><strong>Телефон:</strong> {{ student.phone }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Блок: Резюме -->
+<div id="section-resume" class="section-block">
+  <div class="card shadow-sm p-3 mb-4 text-center">
+    <h5 class="text-secondary">Резюме</h5>
+    <img
+      src="{{ student.resume }}"
+      alt="Резюме"
+      class="img-fluid rounded border mt-2"
+      style="max-width: 100%"
+    />
+  </div>
+</div>
+
+<script>
+  function toggleSection(value) {
+    const sections = document.querySelectorAll(".section-block");
+    sections.forEach((div) => (div.style.display = "none"));
+
+    if (value === "all") {
+      sections.forEach((div) => (div.style.display = "block"));
+    } else {
+      const section = document.getElementById("section-" + value);
+      if (section) section.style.display = "block";
+    }
+  }
+</script>
+
+{% endblock %}
