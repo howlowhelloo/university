@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('students.urls')),   # students.urls должен содержать путь add/
     path('app2/', include('app2.urls')),
+    path('', admin.site.urls)
 ]
 
 if settings.DEBUG:
