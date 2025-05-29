@@ -70,7 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'university.wsgi.application'
-
+CSRF_TRUSTED_ORIGINS = ['https://university-1-r66u.onrender.com']
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
